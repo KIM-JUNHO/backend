@@ -5,4 +5,20 @@ module.exports = {
       author: args.author,
     });
   },
+  updateBook: async (parent, { id, title, author }, { models }, info) => {
+    return await models.Book.findOneAndUpdate(
+      {
+        _id: id,
+      },
+      {
+        $set: {
+          title,
+          author,
+        },
+      },
+      {
+        new: true,
+      }
+    );
+  },
 };

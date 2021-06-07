@@ -13,5 +13,6 @@ module.exports = gql`
   }
   type Mutation {
     addBook(title: String!, author: String!): Book!
+    updateBook(id: ID!, title: String!, author: String!): Book!
   }
 `;
