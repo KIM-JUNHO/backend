@@ -9,13 +9,27 @@ const models = require('./models');
 
 db.connect(environment.mongo_db_uri);
 
+const jwt = require('jsonwebtoken');
+const getUser = (token) => {
+  if (token) {
+    try {
+      return jwt.verify(token, process.env.JWT_SECRET);
+    } catch (err) {
+      throw new Error('Session invalid');
+    }
+  }
+};
+
 async function startApolloServer() {
   const app = express();
   const server = new ApolloServer({
     typeDefs,
     resolvers,
-    context: () => {
-      return { models };
+    context: ({ req, res }) => {
+      const token = req.headers.authorization;
+      const user = getUser(token);
+      console.log(user);
+      return { models, user };
     },
   });
   await server.start();
