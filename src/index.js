@@ -2,8 +2,8 @@ const express = require('express');
 const { ApolloServer } = require('apollo-server-express');
 
 const { environment } = require('./environment.js');
-const { typeDefs } = require('./schema.js');
-const { resolvers } = require('./resolvers.js');
+const typeDefs = require('./schema.js');
+const resolvers = require('./resolvers');
 const db = require('./db.js');
 
 db.connect(environment.mongo_db_uri);
