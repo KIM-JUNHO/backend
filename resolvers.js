@@ -1,7 +1,6 @@
-import { DateTimeResolver, EmailAddressResolver, UnsignedIntResolver } from 'graphql-scalars';
-
 export const resolvers = {
-  DateTime: DateTimeResolver,
-  EmailAddress: EmailAddressResolver,
-  UnsignedInt: UnsignedIntResolver,
+  Query: {
+    firewalls: (_, __, { dataSources: { firewalls } }) => firewalls.getFirewalls(),
+    firewall: (_, { id }, { dataSources: { firewalls } }) => firewalls.getFirewall(),
+  },
 };
