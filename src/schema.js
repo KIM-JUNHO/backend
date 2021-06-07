@@ -23,5 +23,6 @@ module.exports = gql`
     updateBook(id: ID!, title: String!, author: String!): Book!
     deleteBook(id: ID!): Boolean!
     signUp(username: String!, email: String!, password: String!): String!
+    signIn(username: String, email: String, password: String!): String!
   }
 `;
