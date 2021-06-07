@@ -9,6 +9,7 @@ module.exports = gql`
   type Query {
     hello: String
     books: [Book!]!
+    book(id: ID!): Book!
   }
   type Mutation {
     addBook(title: String!, author: String!): Book!
