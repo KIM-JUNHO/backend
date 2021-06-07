@@ -8,8 +8,10 @@
   },
   "license": "ISC",
   "dependencies": {
+    "apollo-datasource-mongodb": "^0.4.1",
     "apollo-server": "^2.25.0",
-    "graphql": "^15.5.0"
+    "graphql": "^15.5.0",
+    "mongodb": "^3.6.9"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"
