@@ -5,6 +5,7 @@ const { environment } = require('./environment.js');
 const typeDefs = require('./schema.js');
 const resolvers = require('./resolvers');
 const db = require('./db.js');
+const models = require('./models');
 
 db.connect(environment.mongo_db_uri);
 
@@ -13,6 +14,9 @@ async function startApolloServer() {
   const server = new ApolloServer({
     typeDefs,
     resolvers,
+    context: () => {
+      return { models };
+    },
   });
   await server.start();
 
