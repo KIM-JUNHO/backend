@@ -4,6 +4,9 @@ const { ApolloServer } = require('apollo-server-express');
 const { environment } = require('./environment.js');
 const { typeDefs } = require('./schema.js');
 const { resolvers } = require('./resolvers.js');
+const db = require('./db.js');
+
+db.connect(environment.mongo_db_uri);
 
 async function startApolloServer() {
   const app = express();
