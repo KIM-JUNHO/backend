@@ -9,7 +9,7 @@ import { resolvers } from './resolvers.js';
 import mongodb from 'mongodb';
 const { MongoClient } = mongodb;
 
-const uri = 'mongodb://localhost:27017/school';
+const uri = 'mongodb://localhost:27017/local';
 const client = new MongoClient(uri, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -17,14 +17,9 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     await client.connect();
-    const database = client.db('sample_mflix');
-    const movies = database.collection('movies');
-    // Query for a movie that has the title 'Back to the Future'
-    const query = { title: 'Back to the Future' };
-    const movie = await movies.findOne(query);
-    console.log(movie);
+    await client.db('admin').command({ ping: 1 });
+    console.log('Connected successfully to server');
   } finally {
-    // Ensures that the client will close when you finish/error
     await client.close();
   }
 }
