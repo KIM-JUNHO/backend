@@ -3,12 +3,9 @@ import { gql } from 'apollo-server';
 export const typeDefs = gql`
   type Firewall {
     id: ID
-    name: String
-    vdom: String
+    test: String
   }
-
   type Query {
-    firewalls: [Firewall]
-    firewall(id: ID!): Firewall
+    firewalls: Firewall
   }
 `;

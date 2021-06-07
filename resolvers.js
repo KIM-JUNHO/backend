@@ -1,6 +1,12 @@
 export const resolvers = {
   Query: {
-    firewalls: (_, __, { dataSources: { firewalls } }) => firewalls.getFirewalls(),
-    firewall: (_, { id }, { dataSources: { firewalls } }) => firewalls.getFirewall(),
+    firewalls(_parent, _args, _context, _info) {
+      return _context.db
+        .collection('wbrt_firewalls')
+        .findOne()
+        .then((data) => {
+          return data;
+        });
+    },
   },
 };
