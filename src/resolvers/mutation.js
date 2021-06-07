@@ -21,4 +21,12 @@ module.exports = {
       }
     );
   },
+  deleteBook: async (parent, { id }, { models }, info) => {
+    try {
+      await models.Book.findOneAndRemove({ _id: id });
+      return true;
+    } catch (err) {
+      return false;
+    }
+  },
 };
