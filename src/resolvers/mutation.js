@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const gravatar = require('../gravatar.js');
 
 module.exports = {
-  addBook: async (parent, args, { models, user }) => {
+  addBook: async (parent, args, { models, user }, info) => {
     if (!user) {
       throw new AuthenticationError('You must login to create a new book');
     }
@@ -14,7 +14,14 @@ module.exports = {
       author: mongoose.Types.ObjectId(user.id),
     });
   },
-  updateBook: async (parent, { id, title, author }, { models }, info) => {
+  updateBook: async (parent, { id, title }, { models, user }, info) => {
+    if (!user) {
+      throw new AuthenticationError('You must sign in to update a book.');
+    }
+    const book = await models.Book.findById(id);
+    if (book && String(book.author) !== user.id) {
+      throw new ForbiddenError("You don't have permission to modify the book");
+    }
     return await models.Book.findOneAndUpdate(
       {
         _id: id,
@@ -22,7 +29,6 @@ module.exports = {
       {
         $set: {
           title,
-          author,
         },
       },
       {
