@@ -1,12 +1,17 @@
+const { AuthenticationError } = require('apollo-server-express');
+const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const gravatar = require('../gravatar.js');
 
 module.exports = {
-  addBook: async (parent, args, { models }, info) => {
+  addBook: async (parent, args, { models, user }) => {
+    if (!user) {
+      throw new AuthenticationError('You must login to create a new book');
+    }
     return await models.Book.create({
       title: args.title,
-      author: args.author,
+      author: mongoose.Types.ObjectId(user.id),
     });
   },
   updateBook: async (parent, { id, title, author }, { models }, info) => {

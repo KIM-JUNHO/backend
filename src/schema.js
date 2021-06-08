@@ -4,7 +4,7 @@ module.exports = gql`
   type Book {
     id: ID!
     title: String!
-    author: User!
+    author: ID!
   }
   type User {
     id: ID!
@@ -19,7 +19,7 @@ module.exports = gql`
     book(id: ID!): Book!
   }
   type Mutation {
-    addBook(title: String!, author: String!): Book!
+    addBook(title: String!): Book!
     updateBook(id: ID!, title: String!, author: String!): Book!
     deleteBook(id: ID!): Boolean!
     signUp(username: String!, email: String!, password: String!): String!
