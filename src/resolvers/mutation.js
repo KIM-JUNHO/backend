@@ -84,4 +84,42 @@ module.exports = {
     }
     return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
   },
+  toggleFavorite: async (parent, { id }, { models, user }, info) => {
+    if (!user) {
+      throw new AuthenticationError('You must sign in.');
+    }
+    let bookCheck = await models.Book.findById(id);
+    const hasUser = bookCheck.favoritedBy.indexOf(user.id);
+    if (hasUser >= 0) {
+      return await models.Book.findByIdAndUpdate(
+        id,
+        {
+          $pull: {
+            favoritedBy: mongoose.Types.ObjectId(user.id),
+          },
+          $inc: {
+            favoriteCount: -1,
+          },
+        },
+        {
+          new: true,
+        }
+      );
+    } else {
+      return await models.Book.findByIdAndUpdate(
+        id,
+        {
+          $push: {
+            favoritedBy: mongoose.Types.ObjectId(user.id),
+          },
+          $inc: {
+            favoriteCount: 1,
+          },
+        },
+        {
+          new: true,
+        }
+      );
+    }
+  },
 };

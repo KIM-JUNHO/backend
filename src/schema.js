@@ -5,6 +5,8 @@ module.exports = gql`
     id: ID!
     title: String!
     author: ID!
+    favoriteCount: Int!
+    favoritedBy: [User!]
   }
   type User {
     id: ID!
@@ -12,6 +14,7 @@ module.exports = gql`
     email: String!
     avatar: String
     books: [Book!]!
+    favorites: [Book!]!
   }
   type Query {
     hello: String
@@ -27,5 +30,6 @@ module.exports = gql`
     deleteBook(id: ID!): Boolean!
     signUp(username: String!, email: String!, password: String!): String!
     signIn(username: String, email: String, password: String!): String!
+    toggleFavorite(id: ID!): Book!
   }
 `;
