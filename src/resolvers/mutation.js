@@ -36,9 +36,16 @@ module.exports = {
       }
     );
   },
-  deleteBook: async (parent, { id }, { models }, info) => {
+  deleteBook: async (parent, { id }, { models, user }, info) => {
+    if (!user) {
+      throw new AuthenticationError('You must sign in to delete a book.');
+    }
+    const book = await models.Book.findById(id);
+    if (book && String(book.author) !== user.id) {
+      throw new ForbiddenError("You don't have permissions to delete the book");
+    }
     try {
-      await models.Book.findOneAndRemove({ _id: id });
+      await book.remove();
       return true;
     } catch (err) {
       return false;
