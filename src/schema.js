@@ -16,6 +16,11 @@ module.exports = gql`
     books: [Book!]!
     favorites: [Book!]!
   }
+  type bookFeed {
+    books: [Book]!
+    cursor: String!
+    hasNextPage: Boolean!
+  }
   type Query {
     hello: String
     books: [Book!]!
@@ -23,6 +28,7 @@ module.exports = gql`
     users: [User!]!
     user(username: String!): User!
     me: User!
+    bookFeed(cursor: String): bookFeed
   }
   type Mutation {
     addBook(title: String!): Book!
