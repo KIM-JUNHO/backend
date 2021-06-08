@@ -17,6 +17,7 @@ module.exports = gql`
     hello: String
     books: [Book!]!
     book(id: ID!): Book!
+    users: [User!]!
   }
   type Mutation {
     addBook(title: String!): Book!

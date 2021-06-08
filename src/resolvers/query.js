@@ -6,4 +6,7 @@ module.exports = {
   book: async (parent, args, { models }, info) => {
     return await models.Book.findById(args.id);
   },
+  users: async (parent, args, { models }, info) => {
+    return await models.User.find({});
+  },
 };
