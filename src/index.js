@@ -27,14 +27,11 @@ async function startApolloServer() {
     context: ({ req, res }) => {
       const token = req.headers.authorization;
       const user = getUser(token);
-      console.log(user);
       return { models, user };
     },
   });
   await server.start();
-
   server.applyMiddleware({ app });
-
   await new Promise((resolve) => app.listen({ port: environment.PORT }, resolve));
   console.log(`🚀 Server ready at http://localhost:${environment.PORT}${server.graphqlPath}`);
   return { server, app };
