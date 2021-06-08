@@ -4,7 +4,7 @@ module.exports = gql`
   type Book {
     id: ID!
     title: String!
-    author: ID!
+    author: User!
     favoriteCount: Int!
     favoritedBy: [User!]
   }
