@@ -9,4 +9,7 @@ module.exports = {
   users: async (parent, args, { models }, info) => {
     return await models.User.find({});
   },
+  user: async (parent, { username }, { models }, info) => {
+    return await models.User.findOne({ username });
+  },
 };
